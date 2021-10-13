@@ -1,13 +1,24 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# (c) @AlbertEinsteinTG
 
+import random
 from pyrogram import filters, Client
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from bot import Translation, LOGGER # pylint: disable=import-error
 from bot.database import Database # pylint: disable=import-error
 
 db = Database()
+
+PHOTO = [
+    "https://telegra.ph/file/cd1349ffbf6dccd5c93b0.jpg",
+    "https://telegra.ph/file/31ff6b4f243ceaf334ec8.jpg",
+    "https://telegra.ph/file/6d099d4e887b7c5a95100.jpg",
+    "https://telegra.ph/file/e9f0a290456a43bdb8f04.jpg",
+    "https://telegra.ph/file/c04aa7004b612f0f34dd2.jpg",
+    "https://telegra.ph/file/35c7f9fb44ead611bde54.jpg",
+    "https://telegra.ph/file/106cf60023420cca674f5.jpg",
+    "https://telegra.ph/file/7480ba59914afb9fcd56f.jpg",
+    "https://telegra.ph/file/58ee29b66366eceafb5e0.jpg",
+    "https://telegra.ph/file/9bd82a5054fa9779c78b8.jpg"
+]
 
 @Client.on_message(filters.command(["start"]) & filters.private, group=1)
 async def start(bot, update):
@@ -57,9 +68,10 @@ async def start(bot, update):
     
     reply_markup = InlineKeyboardMarkup(buttons)
     
-    await bot.send_message(
+    await bot.send_photo(
         chat_id=update.chat.id,
-        text=Translation.START_TEXT.format(
+        photo=f"{random.choice(PHOTO)}",
+        caption=Translation.START_TEXT.format(
                 update.from_user.first_name),
         reply_markup=reply_markup,
         parse_mode="html",
